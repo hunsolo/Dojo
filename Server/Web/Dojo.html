@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.5.0.min.js"></script>
+    <title></title>
+</head>
+<body>
+    <script>
+        var Message;        
+        var Url = 'http://localhost:5125/Service.svc/rest/CreateFile';
+        var FileName = '﻿TestFile.txt';
+
+
+
+        CreateMessage = function (fileName, fileContent) {
+            Message = {
+                FileName: fileName,
+                FileContent: fileContent
+            }
+        }
+
+        SendMessage = function (url, message) {
+
+             $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                 data: JSON.stringify({ 'Value': JSON.stringify(message) }),                
+                contentType: "application/json",
+                url: url,
+                context: this
+                })
+                 .done(function (data) {
+                     alert('Minden ok!');
+                  })
+                 .fail(function (jqXHR, textStatus) {
+                     alert(textStatus + ' ' + jqXHR.statusText);
+                 });
+        }
+
+
+        var FileContent = 'hello ' + Date.now().toString();
+
+        CreateMessage(FileName, FileContent);
+        SendMessage(Url, Message);
+
+    </script>
+</body>
+</html>
